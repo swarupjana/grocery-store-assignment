@@ -3,7 +3,7 @@ package com.grocerystore.simulator.entity;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Register implements Comparable<Register> {
+public class RegisterCounter implements Comparable<RegisterCounter> {
 
 	private Queue<Customer> queue = null;
 	
@@ -12,7 +12,7 @@ public class Register implements Comparable<Register> {
 	// index == any positive number -> Regular
 	private Integer index = null;
 	
-	public Register(Integer index) {
+	public RegisterCounter(Integer index) {
 		super();
 		this.queue = new LinkedList<>();
 		this.index = index;
@@ -33,7 +33,7 @@ public class Register implements Comparable<Register> {
 
 
 	@Override
-	public int compareTo(Register otherRegister) {
+	public int compareTo(RegisterCounter otherRegister) {
 
 		return this.getIndex().compareTo(otherRegister.getIndex());
 	}

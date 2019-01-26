@@ -9,20 +9,20 @@ import java.util.Map;
 import java.util.Queue;
 
 import com.grocerystore.simulator.entity.Customer;
-import com.grocerystore.simulator.entity.Register;
+import com.grocerystore.simulator.entity.RegisterCounter;
 
 public class RegisterCollectors {
 
-	private List<Register> registers = new ArrayList<>();
+	private List<RegisterCounter> registers = new ArrayList<>();
 
 	public RegisterCollectors(int registerCount) {
 
 		for (int index = 0; index < registerCount; index++) {
-			registers.add(new Register(index));
+			registers.add(new RegisterCounter(index));
 		}
 	}
 
-	public List<Register> getRegisters() {
+	public List<RegisterCounter> getRegisters() {
 		return registers;
 	}
 
@@ -32,8 +32,8 @@ public class RegisterCollectors {
 	 * 
 	 * @return
 	 */
-	public Register findShortRegisterBySize() {
-		List<Register> shortRegister = new ArrayList<>(registers);
+	public RegisterCounter findShortRegisterBySize() {
+		List<RegisterCounter> shortRegister = new ArrayList<>(registers);
 		Collections.sort(registers, new RegisterCollectionSizeComparator());
 
 		return shortRegister.get(0);
@@ -48,19 +48,19 @@ public class RegisterCollectors {
 	 * 
 	 * @return
 	 */
-	public Register findRegisterLeastItemAtEnd() {
+	public RegisterCounter findRegisterLeastItemAtEnd() {
 
-		List<Register> emptyRegister = new ArrayList<>();
-		Map<Customer, Register> custRegMapping = new HashMap<>();
+		List<RegisterCounter> emptyRegister = new ArrayList<>();
+		Map<Customer, RegisterCounter> custRegMapping = new HashMap<>();
 		List<Customer> leastItemCustomer = new ArrayList<>();
 
-		for (Register register : registers) {
+		for (RegisterCounter register : registers) {
 
 			if (register.getQueue().size() == 0) {
 				emptyRegister.add(register);
 			} else {
 
-				Customer lastCustomer = fetchLastElement(register.getQueue());
+				Customer lastCustomer = fetchLastCustomerElement(register.getQueue());
 				custRegMapping.put(lastCustomer, register);
 				leastItemCustomer.add(lastCustomer);
 			}
@@ -76,7 +76,7 @@ public class RegisterCollectors {
 
 	}
 
-	private Customer fetchLastElement(Queue<Customer> customerQueue) {
+	private Customer fetchLastCustomerElement(Queue<Customer> customerQueue) {
 
 		Customer lastCustomer = null;
 		Iterator<Customer> iterator = customerQueue.iterator();

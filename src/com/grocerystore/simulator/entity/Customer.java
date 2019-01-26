@@ -9,8 +9,7 @@ public class Customer implements Comparable<Customer> {
 	private int timeArrived;
 
 	
-	public Customer(Integer itemCount, CustomerType type, int timeArrived) {
-		super();
+	public Customer(CustomerType type, int timeArrived, Integer itemCount) {
 		this.itemCount = itemCount;
 		this.type = type;
 		this.timeArrived = timeArrived;

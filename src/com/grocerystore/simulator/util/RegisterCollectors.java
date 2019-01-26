@@ -10,6 +10,7 @@ import java.util.Queue;
 
 import com.grocerystore.simulator.entity.Customer;
 import com.grocerystore.simulator.entity.RegisterCounter;
+import com.grocerystore.simulator.type.CustomerType;
 
 public class RegisterCollectors {
 
@@ -33,8 +34,11 @@ public class RegisterCollectors {
 	 * @return
 	 */
 	public RegisterCounter findShortRegisterBySize() {
-		List<RegisterCounter> shortRegister = new ArrayList<>(registers);
-		Collections.sort(registers, new RegisterCollectionSizeComparator());
+		List<RegisterCounter> shortRegister = new ArrayList<>();
+		for (RegisterCounter registerCounter : registers) {
+			shortRegister.add(registerCounter);
+		}
+		Collections.sort(shortRegister, new RegisterCollectionSizeComparator());
 
 		return shortRegister.get(0);
 	}
@@ -84,5 +88,28 @@ public class RegisterCollectors {
 			lastCustomer = iterator.next();
 		}
 		return lastCustomer;
+	}
+
+	public boolean isRegisterServing() {
+
+		for (RegisterCounter registerCounter : registers) {
+			if (registerCounter.getQueue().size() != 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void serveCustomer(List<Customer> customerListArrivedSameTime) {
+
+		for (Customer customer : customerListArrivedSameTime) {
+			if(customer.getType().equals(CustomerType.A)){
+				RegisterCounter shortRegisterCount = findShortRegisterBySize();
+				shortRegisterCount.getQueue().offer(customer);
+			} else {
+				RegisterCounter registerwithleastItems = findRegisterLeastItemAtEnd();
+                registerwithleastItems.getQueue().offer(customer);
+			}
+		}
 	}
 }

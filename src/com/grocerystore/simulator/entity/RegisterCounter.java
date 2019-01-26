@@ -8,8 +8,8 @@ public class RegisterCounter implements Comparable<RegisterCounter> {
 	private Queue<Customer> queue = null;
 	
 	//There are two type of Register. Regular & Trainee
-	// index == 0 -> Trainee
-	// index == any positive number -> Regular
+	// index == last index -> Trainee
+	// index == any positive number apart from last index -> Regular
 	private Integer index = null;
 	
 	public RegisterCounter(Integer index) {
